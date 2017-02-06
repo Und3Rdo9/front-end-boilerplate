@@ -1,0 +1,36 @@
+{
+  "name": "front-end-boilerplate",
+  "authors": [
+    "info@timbakkum.net"
+  ],
+  "description": "A boilerplate for my front-end development projects",
+  "main": "",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "html5",
+    "javascript",
+    "jquery",
+    "css",
+    "scss"
+  ],
+  "license": "MIT",
+  "homepage": "http://timbakkum.net",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "imagesloaded": "^4.1.0",
+    "flickity": "^2.0.5",
+    "bootstrap": "v4.0.0-alpha.6",
+    "Snap.svg": "snap.svg#^0.5.1",
+    "jQuery.dotdotdot": "jquery-dotdotdot#^1.8.3",
+    "jquery": "^3.1.1"
+  }
+}
