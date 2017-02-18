@@ -1,0 +1,38 @@
+$global-font-size: 100%;
+$global-width: rem-calc(1200);
+$global-lineheight: 1.5;
+$foundation-palette: (
+  primary: #1779ba,
+  secondary: #767676,
+  success: #3adb76,
+  warning: #ffae00,
+  alert: #cc4b37,
+);
+
+$light-gray: #e6e6e6;
+$medium-gray: #cacaca;
+$dark-gray: #8a8a8a;
+$black: #0a0a0a;
+$white: #fefefe;
+$body-background: $tim-base-background;
+$body-font-color: $tim-base-font-color;
+$body-font-family: $tim-primary-font, sans-serif;
+$body-antialiased: true;
+
+/// Global value used for margin on components.
+/// @type Number
+//$global-margin: 1rem;
+
+/// Global value used for padding on components.
+/// @type Number
+//$global-padding: 1rem;
+
+
+$global-weight-normal: normal;
+$global-weight-bold: bold;
+$global-radius: 0;
+$global-text-direction: ltr;
+
+/// Enables flexbox for components that support it.
+/// @type Boolean
+$global-flexbox: false;

@@ -2,3 +2,5 @@
 *.css.map
 /node_modules/
 src/bower_components/
+src/scripts/build/
+src/stylesheets/build/

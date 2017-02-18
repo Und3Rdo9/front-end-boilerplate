@@ -1,0 +1,24 @@
+//** Typography **//
+$tim-primary-font: 'Lato', sans-serif;
+$tim-secondary-font: '';
+$tim-base-font-size:16;
+$tim-base-line-height:1.5;
+$tim-base-background:none;
+$tim-base-font-color:#0a0a0a;
+
+$link-color: blue;
+$link-hover-color: darken($link-color, 15%);
+$link-decoration: none;
+$link-hover-decoration:underline;
+
+//** Forms **//
+$cursor-disabled:not-allowed;
+
+//** Foundation overrides **//
+@import "_foundation-overrides.scss";
+
+//** Modular Vertical (Typography) Scale **//
+$sgl-debug-mode:true;
+$sgl-base-font-size:$tim-base-font-size;
+$sgl-base-line-height:$tim-base-line-height;
+//$sgl-scale-factor:1.333;

@@ -31,6 +31,10 @@
     "bootstrap": "v4.0.0-alpha.6",
     "Snap.svg": "snap.svg#^0.5.1",
     "jQuery.dotdotdot": "jquery-dotdotdot#^1.8.3",
-    "jquery": "^3.1.1"
+    "jquery": "^3.1.1",
+    "modular-scale": "^2.1.3",
+    "cutestrap": "^1.3.1",
+    "sassy-gridlover": "^4.0.0",
+    "foundation-sites": "^6.3.0"
   }
 }

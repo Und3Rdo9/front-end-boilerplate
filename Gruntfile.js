@@ -1,83 +1,145 @@
 /*global module:false*/
+/* jshint node: true */
 module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
     // Metadata.
     pkg: grunt.file.readJSON('package.json'),
-    banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
-      '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-      '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
-      '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
-      ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
     // Task configuration.
-    concat: {
+
+    sass: {                              
+      dist: {                            
+        options: {                       
+          style: 'expanded',
+          trace: true,
+
+        },
+        files: {                         
+          'src/stylesheets/build/main.compiled.css': 'src/stylesheets/scss/main.scss', // 'destination': 'source'
+          
+        }
+      }
+    },
+    postcss: {
       options: {
-        banner: '<%= banner %>',
-        stripBanners: true
+        map: true, 
+        processors: [
+          require('autoprefixer')({browsers: 'last 2 versions'}), // add vendor prefixes
+          require('cssnano')() // minify the result
+        ]
       },
       dist: {
-        src: ['lib/<%= pkg.name %>.js'],
-        dest: 'dist/<%= pkg.name %>.js'
+        src: 'src/stylesheets/build/main.compiled.css',
+        dest: 'src/stylesheets/build/main.min.css'
       }
     },
     uglify: {
       options: {
-        banner: '<%= banner %>'
+        sourceMap: true,
+        compress: {},
       },
       dist: {
-        src: '<%= concat.dist.dest %>',
-        dest: 'dist/<%= pkg.name %>.min.js'
+        src: ['src/scripts/main.js'],
+        dest: 'src/scripts/build/main.min.js'
       }
     },
     jshint: {
+
       options: {
         curly: true,
         eqeqeq: true,
-        immed: true,
         latedef: true,
         newcap: true,
         noarg: true,
-        sub: true,
         undef: true,
         unused: true,
         boss: true,
         eqnull: true,
         browser: true,
+        devel: true,
+        reporterOutput: '', 
         globals: {
           jQuery: true
         }
+
+      },
+      main: {
+        src: ['src/scripts/*.js']
       },
       gruntfile: {
-        src: 'Gruntfile.js'
+        src: ['Gruntfile.js']
       },
-      lib_test: {
-        src: ['lib/**/*.js', 'test/**/*.js']
-      }
+
     },
-    qunit: {
-      files: ['test/**/*.html']
+    modernizr:{
+      dist: {
+        "parseFiles": true,
+        "crawl" : true,
+        "customTests": [],
+        "devFile": false,
+        "dest": "src/scripts/build/modernizr-output.js",
+        "tests": [
+          // Tests
+        ],
+        "options": [
+          "setClasses"
+        ],
+        "uglify": true
+      },
+    },
+    htmlhint: {
+      html1: {
+        options: {
+          'tag-pair': true
+        },
+        src: ['src/*.html']
+      },
     },
     watch: {
       gruntfile: {
-        files: '<%= jshint.gruntfile.src %>',
+        files: 'Gruntfile.js',
         tasks: ['jshint:gruntfile']
       },
-      lib_test: {
-        files: '<%= jshint.lib_test.src %>',
-        tasks: ['jshint:lib_test', 'qunit']
-      }
-    }
+      main: {
+        files: 'src/scripts/main.js',
+        tasks: ['jshint:main', 'uglify'],
+        options: {
+          spawn: false,
+          livereload: true,
+        },
+      },
+      scss:{
+        files: ['src/stylesheets/*.scss', 'src/stylesheets/**/*.scss'],
+        tasks: ['sass', 'postcss'],
+        options: {
+          spawn: false,
+          livereload: true,
+        },
+      },
+      html: {
+        files: ['src/*.html'],
+        tasks: ['htmlhint'],
+        options: {
+          spawn: false,
+          livereload: true,
+        },
+      },
+    },
   });
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-postcss');
+  grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-modernizr');
+  grunt.loadNpmTasks('grunt-htmlhint');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+  grunt.registerTask('default', ['watch']);
+  grunt.registerTask('compile', ['modernizr:dist', 'uglify', 'sass', 'postcss']);
 
 };
