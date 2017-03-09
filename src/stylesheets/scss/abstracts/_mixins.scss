@@ -1,0 +1,65 @@
+@mixin autosize-in-container{
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+@mixin vertical-align {
+  	position: relative;
+  	top: 50%;
+	 transform: translateY(-50%);
+}
+
+@mixin horizontal-align {
+  	position: relative;
+  	left: 50%;
+    transform: translateX(-50%);
+}
+
+@mixin align-both{
+  	position: relative;
+  	left: 50%;
+  	top: 50%;
+ 	transform: translate(-50%, -50%);
+}
+
+@mixin parent-vertical-align{
+  	transform-style: preserve-3d;
+}
+
+.intrinsic-container {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+}
+ 
+.intrinsic-container iframe {
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/**
+ * Ratios
+ * Returns the ratio for specified dimensions.
+ */
+@function ratio($width, $height) {
+  @return percentage( $height / $width);
+}
+
+
+@mixin generateRatios($width, $height, $prefix: "ratio-") {
+  $class-name: $prefix + $width + "x" + $height;
+
+  .#{$class-name} {
+    padding-bottom: ratio($width, $height);
+  }
+  // Output example: .ratio-16x9 {}
+}
+
+//@include generateRatios(16,9); // 16x9
+//@include generateRatios(4,3);  // 4x3
+//@include generateRatios(640,450);
